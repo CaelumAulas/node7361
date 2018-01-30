@@ -23,7 +23,18 @@ module.exports = function (server){
 
     server.post('/produtos', (req, res) => {
         const livro = req.body
+        const connection = getConnection()
 
-        res.render('produtos/sucesso', { livro })
+        connection.query('INSERT INTO livros SET ?', livro, 
+            (error, result, fields) =>{
+                if (!error) {
+                    res.redirect('/produtos')
+                } else {
+                    res.render('error', { error })
+                }
+            }
+        )
+
+        connection.end()
     })
 }
