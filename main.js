@@ -1,8 +1,13 @@
+//https://github.com/CaelumAulas/node7361
 const server = require('./server')
+const port = 3000
 
-require("./routes/produtos")(server)
+// const funcao = require('./routes/produtos')
+// funcao(server)
+require('./routes/produtos')(server)
 
-server.listen(3000, function(){
-    console.log("Levantou")
+server.listen(port, function(){
+	// console.log('Servidor de pé em http://localhost:' + port)
+	console.log(`Servidor de pé em http://localhost:${port}`)
+	console.log('Pra derrubar o servirdor: ctrl + c')
 })
-

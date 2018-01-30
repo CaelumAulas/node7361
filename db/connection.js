@@ -1,14 +1,10 @@
-const mysql = require("mysql")
-
-console.log("Executou o arquivo de conexao")
+const mysql = require('mysql')
 
 module.exports = function(){
-    console.log("Criou a conexao")
     return mysql.createConnection({
-        database: "cdc", 
-        user: "root", 
-        password: "", 
-        host: "localhost",
-        port: 32768
+        database: process.env.DB_NAME, 
+        user: process.env.DB_USER, 
+        password: process.env.DB_PASS, 
+        host: process.env.DB_HOST
     })
 }
