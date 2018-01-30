@@ -20,4 +20,10 @@ module.exports = function (server){
     server.get('/produtos/form', (req, res) => {
         res.render('produtos/form')
     })
+
+    server.post('/produtos', (req, res) => {
+        const livro = req.body
+
+        res.render('produtos/sucesso', { livro })
+    })
 }
