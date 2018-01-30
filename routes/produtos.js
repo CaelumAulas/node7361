@@ -1,20 +1,16 @@
-const getConnection = require('../db/connection')
+const LivrosDao = require('../dao/LivrosDao.js')
 
 module.exports = function (server){
     server.get('/produtos', function(req, res){
-        const connection = getConnection()
+        const livrosDao = new LivrosDao()
 
-       connection.query('select * from livros', function(erro, resultado){
-            if(erro == null){
-                res.render('produtos/lista', {
-                    livros: resultado
-                })                
+        livrosDao.getAll(function(erro, livros) {
+            if(!erro) {
+                res.render('produtos/lista', { livros })
             } else {
-                console.error(erro)
-                res.send('Deu ruim')
+                res.send(erro)
             }
         })
-        connection.end()
     })
 
     server.get('/produtos/form', (req, res) => {
