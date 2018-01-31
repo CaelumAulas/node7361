@@ -6,7 +6,15 @@ class LivrosController {
 
     livrosDao.getAll(function(erro, livros) {
         if(!erro) {
-            res.render('produtos/lista', { livros })
+            res.format({
+                html: () => {
+                    res.render('produtos/lista', { livros })
+                },
+                json: () => {
+                    res.json(livros)
+                }
+            })
+            
         } else {
             res.send(erro)
         }
