@@ -1,33 +1,16 @@
 const LivrosDao = require('../dao/LivrosDao.js')
-
+const LivrosController = require('../controller/LivrosController')
 
 module.exports = function (server){
-    server.get('/produtos', function(req, res){
-        const livrosDao = new LivrosDao()
-
-        livrosDao.getAll(function(erro, livros) {
-            if(!erro) {
-                res.render('produtos/lista', { livros })
-            } else {
-                res.send(erro)
-            }
-        })
+    server.use((req, res, next) => {
+        console.log(req.url)
+        console.log(req.ip)
+        next()
     })
-
-    server.get('/produtos/form', (req, res) => {
-        res.render('produtos/form')
-    })
-
-    server.post('/produtos', (req, res) => {
-        const livro = req.body
-        const livrosDao = new LivrosDao()
-
-        livrosDao.save(livro, (erro) => {
-            if(!erro) {
-                res.redirect('/produtos')
-            } else {
-                res.send(erro)
-            }
-        })
+    server.get('/produtos', LivrosController.getAll)
+    server.get('/produtos/form', (req, res) => res.render('produtos/form'))
+    server.post('/produtos', LivrosController.save)
+    server.use((req, res) => {
+        res.render('404')
     })
 }
