@@ -1,19 +1,17 @@
-const getConnection = require('../db/connection')
-
 class LivrosDao {
-  getAll(callback) {
-    const connection = getConnection()
-
-    // connection.query('SELECT * FROM livros', function(erro, resultado) {
-    //   callback(erro, resultado)
-    // })
-    connection.query('SELECT * FROM livros', callback )
-    
-    connection.end()
+  constructor(connection) {
+    this.connection = connection
   }
 
-  save() {
+  getAll(callback) {
+    // this.connection.query('SELECT * FROM livros', function(erro, resultado) {
+    //   callback(erro, resultado)
+    // })
+    this.connection.query('SELECT * FROM livros', callback())
+  }
 
+  save(livro, callback) {
+    this.connection.query('INSERT INTO livros SET ?', livro, callback)
   }
 }
 
