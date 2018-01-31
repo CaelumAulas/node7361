@@ -1,10 +1,9 @@
 const LivrosDao = require('../dao/LivrosDao.js')
-const getConnection = require('../db/connection')
+
 
 module.exports = function (server){
     server.get('/produtos', function(req, res){
-        const connection = getConnection()
-        const livrosDao = new LivrosDao(connection)
+        const livrosDao = new LivrosDao()
 
         livrosDao.getAll(function(erro, livros) {
             if(!erro) {
@@ -13,8 +12,6 @@ module.exports = function (server){
                 res.send(erro)
             }
         })
-
-        connection.end()
     })
 
     server.get('/produtos/form', (req, res) => {
@@ -23,8 +20,7 @@ module.exports = function (server){
 
     server.post('/produtos', (req, res) => {
         const livro = req.body
-        const connection = getConnection()
-        const livrosDao = new LivrosDao(connection)
+        const livrosDao = new LivrosDao()
 
         livrosDao.save(livro, (erro) => {
             if(!erro) {
@@ -33,7 +29,5 @@ module.exports = function (server){
                 res.send(erro)
             }
         })
-
-        connection.end()
     })
 }
